@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Day.Run do
+defmodule Mix.Tasks.Advent.Run do
   use Mix.Task
 
   def run([day, part | rest]) do
@@ -6,7 +6,7 @@ defmodule Mix.Tasks.Day.Run do
 
     year = System.get_env("AOC_YEAR")
     year
-    |> Advent.Utils.Input.read(day)
+    |> Advent.read(day)
     |> run_part(year, day, part, rest)
     |> IO.inspect(label: :output)
   end

@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.Day.Setup do
+defmodule Mix.Tasks.Advent.Setup do
   require Logger
   use Mix.Task
 
@@ -7,7 +7,7 @@ defmodule Mix.Tasks.Day.Setup do
     # download the input
     year = System.get_env("AOC_YEAR")
 
-    case Advent.Utils.Input.download(year, day) do
+    case Advent.download(year, day) do
       {:error, error} -> Logger.error(error)
       {:ok, _body} ->
         # generate a test file
