@@ -8,7 +8,9 @@ defmodule Mix.Tasks.Advent.Setup do
     year = System.get_env("AOC_YEAR")
 
     case Advent.download(year, day) do
-      {:error, error} -> Logger.error(error)
+      {:error, error} ->
+        Logger.error(error)
+
       {:ok, _body} ->
         # generate a test file
         {year, day, contents} = test_file_contents(year, day)

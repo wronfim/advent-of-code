@@ -32,6 +32,7 @@ defmodule Advent do
         |> path(day)
         |> File.read!()
         |> String.trim()
+
       _ ->
         year
         |> download(day)
@@ -53,5 +54,4 @@ defmodule Advent do
 
   defp path(year), do: Path.join(@input_dir, "year_#{year}")
   defp path(year, day), do: Path.join(@input_dir, "year_#{year}/#{day}.txt")
-
 end

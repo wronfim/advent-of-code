@@ -5,6 +5,7 @@ defmodule Mix.Tasks.Advent.Run do
     Application.ensure_all_started(:advent)
 
     year = System.get_env("AOC_YEAR")
+
     year
     |> Advent.read(day)
     |> run_part(year, day, part, rest)
