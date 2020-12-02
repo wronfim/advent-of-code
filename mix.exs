@@ -1,9 +1,9 @@
-defmodule Advent2020.MixProject do
+defmodule Advent.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :advent2020,
+      app: :advent,
       version: "0.1.0",
       elixir: "~> 1.11",
       start_permanent: Mix.env() == :prod,
@@ -15,7 +15,7 @@ defmodule Advent2020.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Advent2020.Application, []}
+      mod: {Advent.Application, []}
     ]
   end
   # Run "mix help deps" to learn about dependencies.

@@ -1,31 +1,37 @@
-defmodule Advent2020.Utils.Input do
+defmodule Advent.Utils.Input do
   @input_dir "priv/inputs"
-  def download(day) do
+
+  def download(year, day) do
     :get
-    |> Finch.build("https://adventofcode.com/2020/day/#{day}/input",  [{"cookie", "session=#{System.get_env("AOC_SESSION")}"}])
+    |> Finch.build("https://adventofcode.com/#{year}/day/#{day}/input", [{"cookie", "session=#{System.get_env("AOC_SESSION")}"}])
     |> Finch.request(AdventFinch)
     |> case do
       {:ok, %{status: 200, body: body}} ->
-        :ok = File.mkdir_p(@input_dir)
-        :ok = File.write(path(day), body)
-        body
-      error -> error
+        :ok = File.mkdir_p(path(year))
+        :ok = File.write(path(year, day), body)
+        {:ok, body}
+
+      {:ok, %{status: 400, body: body}} ->
+        {:error, body}
+
+      error ->
+        {:error, error}
     end
   end
 
-  def read(day) do
-    day
-    |> path()
+  def read(year, day) do
+    year
+    |> path(day)
     |> File.exists?()
     |> case do
       true ->
-        day
-        |> path()
+        year
+        |> path(day)
         |> File.read!()
         |> String.trim()
       _ ->
-        day
-        |> download()
+        year
+        |> download(day)
         |> String.trim()
     end
   end
@@ -42,5 +48,6 @@ defmodule Advent2020.Utils.Input do
     |> Enum.map(&String.to_integer/1)
   end
 
-  defp path(day), do: Path.join(@input_dir, "#{day}.txt")
+  defp path(year), do: Path.join(@input_dir, "year_#{year}")
+  defp path(year, day), do: Path.join(@input_dir, "year_#{year}/#{day}.txt")
 end

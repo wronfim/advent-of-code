@@ -1,4 +1,4 @@
-defmodule Advent2020.Application do
+defmodule Advent.Application do
   @moduledoc false
 
   use Application
@@ -9,7 +9,7 @@ defmodule Advent2020.Application do
       {Finch, name: AdventFinch}
     ]
 
-    opts = [strategy: :one_for_one, name: Advent2020.Supervisor]
+    opts = [strategy: :one_for_one, name: Advent.Supervisor]
     Supervisor.start_link(children, opts)
   end
 end

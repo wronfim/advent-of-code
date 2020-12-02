@@ -1,28 +1,33 @@
 defmodule Mix.Tasks.Day.Setup do
+  require Logger
   use Mix.Task
 
   def run([day]) do
-    Application.ensure_all_started(:advent2020)
+    Application.ensure_all_started(:advent)
     # download the input
-    Advent2020.Utils.Input.download(day)
+    year = System.get_env("AOC_YEAR")
 
-    # generate a test file
-    {day, contents} = test_file_contents(day)
+    case Advent.Utils.Input.download(year, day) do
+      {:error, error} -> Logger.error(error)
+      {:ok, _body} ->
+        # generate a test file
+        {year, day, contents} = test_file_contents(year, day)
 
-    if not File.exists?("test/day_#{day}_test.exs") do
-      File.mkdir_p("test")
-      File.write("test/day_#{day}_test.exs", contents)
-    end
+        if not File.exists?("test/year_#{year}/day_#{day}_test.exs") do
+          File.mkdir_p("test/year_#{year}")
+          File.write("test/year_#{year}/day_#{day}_test.exs", contents)
+        end
 
-    {day, contents} = source_file_contents(day)
+        {year, day, contents} = source_file_contents(year, day)
 
-    if not File.exists?("lib/advent2020/day_#{day}.ex") do
-      File.mkdir_p("lib/advent2020")
-      File.write("lib/advent2020/day_#{day}.ex", contents)
+        if not File.exists?("lib/advent/year_#{year}/day_#{day}.ex") do
+          File.mkdir_p("lib/advent/year_#{year}")
+          File.write("lib/advent/year_#{year}/day_#{day}.ex", contents)
+        end
     end
   end
 
-  defp test_file_contents(day) do
+  defp test_file_contents(year, day) do
     day =
       day
       |> to_string
@@ -30,40 +35,43 @@ defmodule Mix.Tasks.Day.Setup do
 
     contents =
       """
-      defmodule Advent2020.Day#{day}Test do
+      defmodule Advent.Year#{year}.Day#{day}Test do
         use ExUnit.Case
 
-        import Advent2020.Day#{day}
+        import Advent.Year#{year}.Day#{day}
 
         test "part1" do
+          assert part1("input") == "Your Answer."
         end
 
-        @tag :skip
         test "part2" do
+          assert part1("input") == "Your Answer."
         end
       end
       """
       |> String.trim()
 
-    {day, contents}
+    {year, day, contents}
   end
 
-  defp source_file_contents(day) do
+  defp source_file_contents(year, day) do
     day =
       day
       |> to_string
       |> String.pad_leading(2, "0")
 
     contents = """
-    defmodule Advent2020.Day#{day} do
-      def part1 do
+    defmodule Advent.Year#{year}.Day#{day} do
+      def part1(input) do
+        "Your Answer."
       end
 
-      def part2 do
+      def part2(input) do
+        "Your Answer."
       end
     end
     """
 
-    {day, contents}
+    {year, day, contents}
   end
 end

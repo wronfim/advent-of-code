@@ -1,4 +1,8 @@
-# Advent of Code 2020
+# Advent of Code
+
+## Each Year
+
+Make sure `AOC_YEAR` env var has the correct year.
 
 ## Each Day
 
