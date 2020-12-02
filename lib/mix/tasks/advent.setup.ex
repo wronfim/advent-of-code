@@ -62,11 +62,11 @@ defmodule Mix.Tasks.Advent.Setup do
 
     contents = """
     defmodule Advent.Year#{year}.Day#{day} do
-      def part1(input) do
+      def part1(_input) do
         "Your Answer."
       end
 
-      def part2(input) do
+      def part2(_input) do
         "Your Answer."
       end
     end

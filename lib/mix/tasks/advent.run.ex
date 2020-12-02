@@ -8,7 +8,7 @@ defmodule Mix.Tasks.Advent.Run do
     year
     |> Advent.read(day)
     |> run_part(year, day, part, rest)
-    |> IO.inspect(label: :output)
+    |> IO.inspect(label: :answer)
   end
 
   defp run_part(input, year, day, part, args) do
