@@ -47,7 +47,7 @@ defmodule Mix.Tasks.Advent.Setup do
         end
 
         test "part2" do
-          assert part1("input") == "Your Answer."
+          assert part2("input") == "Your Answer."
         end
       end
       """
